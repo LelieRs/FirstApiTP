@@ -1,8 +1,3 @@
 package com.attachments.firstdemoapi.model
 
-class Movie {
-    val name = ""
-    val director = ""
-    val category = ""
-    val price = 0
-}
+data class Movie (var name: String, var director: String, var category: String, var price: Int)
