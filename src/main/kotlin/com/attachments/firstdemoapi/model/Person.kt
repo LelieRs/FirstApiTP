@@ -1,4 +1,4 @@
 package com.attachments.firstdemoapi.model
 
-data class Person (val name:String, val lastName:String, val dni:Int, val age:Int)
+data class Person (var name:String, var lastName:String, val dni:Int, var age:Int)
 
