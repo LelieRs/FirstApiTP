@@ -1,6 +1,7 @@
-package com.attachments.firstdemoapi.repository
+package com.attachments.firstdemoapi.repository.impl
 
 import com.attachments.firstdemoapi.model.Person
+import com.attachments.firstdemoapi.repository.PersonRepository
 import com.attachments.firstdemoapi.repository.dao.PersonDao
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
