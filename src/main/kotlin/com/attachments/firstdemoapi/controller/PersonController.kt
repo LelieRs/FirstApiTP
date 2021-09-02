@@ -1,7 +1,7 @@
 package com.attachments.firstdemoapi.controller
 
 import com.attachments.firstdemoapi.model.Person
-import com.attachments.firstdemoapi.service.PersonService
+import com.attachments.firstdemoapi.service.PersonServiceInt
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/firstapi")
-class PersonController {
+class PersonController (@Autowired var personService: PersonServiceInt){
 
-    @Autowired lateinit var personService: PersonService
 
     @PostMapping("/persons")
     fun generatePerson (@RequestBody person: Person): ResponseEntity<String> {
