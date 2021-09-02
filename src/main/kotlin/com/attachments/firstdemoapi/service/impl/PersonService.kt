@@ -12,7 +12,7 @@ class PersonService( @Autowired  private var personRepository: PersonRepository)
     //TODO: "Generar interface del service"
 
     override fun addPerson(person : Person): String =
-        "Estamos en PersonService -> addPerson y status " + personRepository.savePerson(person)
+        "Esto es PersonService -> addPerson y status " + personRepository.savePerson(person)
 
     override fun findAllPersons(): MutableMap<Int, Person> =
         personRepository.findAllPersons()
