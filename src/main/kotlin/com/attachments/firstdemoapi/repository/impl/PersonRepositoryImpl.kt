@@ -25,12 +25,12 @@ class PersonRepositoryImpl(@Autowired  private var personDao: PersonDao): Person
     }
 
     override fun findPersonByDni(personDni: Int): Person? {
-        log.info("b\"Estás en PersonRepositoryImpl - fun findPersonByDni -> Se realizará la búsqueda del DNI ${personDni}.")
+        log.info("Estás en PersonRepositoryImpl - fun findPersonByDni -> Se realizará la búsqueda del DNI ${personDni}.")
         return personDao.findByDni(personDni)
     }
 
     override fun updatePerson(person: Person): Boolean {
-        log.info("\"Estás en PersonRepositoryImpl - fun updatePerson -> Se modificarán los datos de ${person.name}.")
+        log.info("Estás en PersonRepositoryImpl - fun updatePerson -> Se modificarán los datos de ${person.name}.")
         return personDao.updatePerson(person)
     }
 
