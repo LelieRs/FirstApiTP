@@ -38,5 +38,4 @@ class PersonRepositoryImpl(@Autowired  private var personDao: PersonDao): Person
         log.info("Estás en PersonRepositoryImpl - fun deletePersonByDni -> Será eliminada del repositorio la persona con DNI ${dni}.")
         return personDao.deletePersonByDni(dni)
     }
-
 }
