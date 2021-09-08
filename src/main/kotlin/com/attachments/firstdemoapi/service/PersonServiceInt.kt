@@ -4,13 +4,13 @@ import com.attachments.firstdemoapi.model.Person
 
 interface PersonServiceInt {
 
-        fun addPerson(person : Person): String
+        fun addPerson(person : Person): Person?
 
-        fun findAllPersons(): MutableMap<Int, Person>
+        fun findAllPersons(): List<Person>
 
         fun findPersonByDni(dni: Int): Person?
 
-        fun updatePerson(person: Person): Boolean
+        fun updatePerson(person: Person): Person
 
-        fun deletePersonByDni(dni: Int): Boolean
+        fun deletePersonByDni(dni: Int): Unit
 }

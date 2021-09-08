@@ -13,13 +13,13 @@ class PersonRepositoryImpl(@Autowired  private var personDao: PersonDao): Person
     private val log = KotlinLogging.logger {}
 
 
-    override fun savePerson(person: Person): Boolean {
+    override fun savePerson(person: Person): Person? {
         log.info("Estás en PersonRepositoryImpl - fun savePerson -> Se guardarán los datos de ${person.name}.")
         val result = personDao.save(person)
         return result
     }
 
-    override fun findAllPersons(): MutableMap<Int, Person> {
+    override fun findAllPersons(): List<Person> {
         log.info("Estás en PersonRepositoryImpl - fun findAllPersons -> Se ha realizará la búsqueda de todas las personas existentes en el repositorio.")
         return personDao.findAllPersons()
     }
@@ -29,12 +29,12 @@ class PersonRepositoryImpl(@Autowired  private var personDao: PersonDao): Person
         return personDao.findByDni(personDni)
     }
 
-    override fun updatePerson(person: Person): Boolean {
+    override fun updatePerson(person: Person): Person {
         log.info("Estás en PersonRepositoryImpl - fun updatePerson -> Se modificarán los datos de ${person.name}.")
         return personDao.updatePerson(person)
     }
 
-    override fun deletePersonByDni(dni: Int): Boolean {
+    override fun deletePersonByDni(dni: Int): Unit {
         log.info("Estás en PersonRepositoryImpl - fun deletePersonByDni -> Será eliminada del repositorio la persona con DNI ${dni}.")
         return personDao.deletePersonByDni(dni)
     }

@@ -14,12 +14,12 @@ class PersonController (@Autowired var personService: PersonServiceInt){
 
 
     @PostMapping("/persons")
-    fun generatePerson (@RequestBody person: Person): ResponseEntity<String> {
+    fun generatePerson (@RequestBody person: Person): ResponseEntity<Person> {
         return ResponseEntity(personService.addPerson(person), HttpStatus.OK)
     }
 
     @GetMapping("/persons")
-    fun findAllPersons(): ResponseEntity <MutableMap<Int, Person>>{
+    fun findAllPersons(): ResponseEntity <List<Person>>{
         val personList = personService.findAllPersons()
         return ResponseEntity(personService.findAllPersons(), HttpStatus.OK)
     }
@@ -30,12 +30,12 @@ class PersonController (@Autowired var personService: PersonServiceInt){
     }
 
     @PutMapping("/persons")
-    fun updatePerson(@RequestBody person: Person): ResponseEntity<Boolean> {
+    fun updatePerson(@RequestBody person: Person): ResponseEntity<Person> {
         return ResponseEntity(personService.updatePerson(person), HttpStatus.OK)
     }
 
     @DeleteMapping("/persons/{dni}")
-    fun deletePersonByDni(@PathVariable dni: Int): ResponseEntity<Boolean>{
+    fun deletePersonByDni(@PathVariable dni: Int): ResponseEntity<Unit>{
         return ResponseEntity(personService.deletePersonByDni(dni), HttpStatus.OK)
     }
 
