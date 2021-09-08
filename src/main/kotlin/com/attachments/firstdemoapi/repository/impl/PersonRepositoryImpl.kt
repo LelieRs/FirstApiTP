@@ -13,29 +13,31 @@ class PersonRepositoryImpl(@Autowired  private var personDao: PersonDao): Person
     private val log = KotlinLogging.logger {}
 
 
-    override fun savePerson(person: Person): Person? {
-        log.info("Estás en PersonRepositoryImpl - fun savePerson -> Se guardarán los datos de ${person.name}.")
+    override fun savePerson(person: Person): Person {
+        log.info("Saving ${person.name}'s data.")
         val result = personDao.save(person)
+        log.info("${person.name}'s data has been saved successfully.")
         return result
     }
 
     override fun findAllPersons(): List<Person> {
-        log.info("Estás en PersonRepositoryImpl - fun findAllPersons -> Se ha realizará la búsqueda de todas las personas existentes en el repositorio.")
-        return personDao.findAllPersons()
+        log.info("Searching for all the people saved in repository...")
+        val result = personDao.findAllPersons()
+        log.info("Persons found: ")
+        return result
     }
 
     override fun findPersonByDni(personDni: Int): Person? {
-        log.info("Estás en PersonRepositoryImpl - fun findPersonByDni -> Se realizará la búsqueda del DNI ${personDni}.")
-        return personDao.findByDni(personDni)
-    }
-
-    override fun updatePerson(person: Person): Person {
-        log.info("Estás en PersonRepositoryImpl - fun updatePerson -> Se modificarán los datos de ${person.name}.")
-        return personDao.updatePerson(person)
+        log.info("Searching for ${personDni}...")
+        val person= personDao.findByDni(personDni)
+        log.info("Person found.")
+        return person
     }
 
     override fun deletePersonByDni(dni: Int): Unit {
-        log.info("Estás en PersonRepositoryImpl - fun deletePersonByDni -> Será eliminada del repositorio la persona con DNI ${dni}.")
-        return personDao.deletePersonByDni(dni)
+        log.info("The person with ID ${dni} will be deleted.")
+        val deletedPerson= personDao.deletePersonByDni(dni)
+        log.info("The person with ID ${dni} has been deleted.")
+        return deletedPerson
     }
 }
