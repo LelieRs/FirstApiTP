@@ -4,13 +4,12 @@ import com.attachments.firstdemoapi.model.Person
 
 interface PersonRepository {
 
-    fun savePerson(person: Person): Boolean
+    fun savePerson(person: Person): Person
 
-    fun findAllPersons(): MutableMap<Int, Person>
+    fun findAllPersons(): List<Person>
 
     fun findPersonByDni(personDni: Int): Person?
 
-    fun updatePerson(person: Person): Boolean
+    fun deletePersonByDni(dni: Int): Unit
 
-    fun deletePersonByDni(dni: Int): Boolean
 }
