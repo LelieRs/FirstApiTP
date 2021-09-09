@@ -14,30 +14,25 @@ class PersonRepositoryImpl(@Autowired  private var personDao: PersonDao): Person
 
 
     override fun savePerson(person: Person): Person {
-        log.info("Saving ${person.name}'s data.")
-        val result = personDao.save(person)
-        log.info("${person.name}'s data has been saved successfully.")
-        return result
+        log.info("Saving person...")
+        return personDao.save(person)
+        log.info("Person saved successfully.")
     }
 
+
     override fun findAllPersons(): List<Person> {
-        log.info("Searching for all the people saved in repository...")
-        val result = personDao.findAllPersons()
-        log.info("Persons found: ")
-        return result
+        log.info("Finding all people...")
+        return personDao.findAllPersons()
     }
 
     override fun findPersonByDni(personDni: Int): Person? {
-        log.info("Searching for ${personDni}...")
-        val person= personDao.findByDni(personDni)
-        log.info("Person found.")
-        return person
+        log.info("looking for $personDni's person in repository...")
+        return personDao.findByDni(personDni)
     }
 
     override fun deletePersonByDni(dni: Int): Unit {
-        log.info("The person with ID ${dni} will be deleted.")
-        val deletedPerson= personDao.deletePersonByDni(dni)
-        log.info("The person with ID ${dni} has been deleted.")
-        return deletedPerson
+        log.info("Deleting person...")
+        personDao.deletePersonByDni(dni)
+        log.info("The person has been deleted from the repository.")
     }
 }

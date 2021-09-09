@@ -10,5 +10,7 @@ interface PersonService {
 
         fun findPersonByDni(dni: Int): Person?
 
+        fun updatePerson(person: Person): Person
+
         fun deletePersonByDni(dni: Int): Unit
 }
