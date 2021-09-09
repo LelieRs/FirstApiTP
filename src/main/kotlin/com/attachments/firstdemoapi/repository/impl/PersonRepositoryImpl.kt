@@ -1,5 +1,6 @@
 package com.attachments.firstdemoapi.repository.impl
 
+import com.attachments.firstdemoapi.exceptions.NotFoundException
 import com.attachments.firstdemoapi.model.Person
 import com.attachments.firstdemoapi.repository.PersonRepository
 import com.attachments.firstdemoapi.repository.dao.PersonDao
@@ -14,25 +15,27 @@ class PersonRepositoryImpl(@Autowired  private var personDao: PersonDao): Person
 
 
     override fun savePerson(person: Person): Person {
-        log.info("Saving person...")
-        return personDao.save(person)
-        log.info("Person saved successfully.")
+        log.info("saving $person's data in repository...")
+        val personSaved = personDao.save(person)
+        log.info("${person.name}'s data has been saved in repository / $personSaved")
+        return personSaved
     }
 
-
     override fun findAllPersons(): List<Person> {
-        log.info("Finding all people...")
+        log.info("Finding all the people saved in repository...")
         return personDao.findAllPersons()
     }
 
     override fun findPersonByDni(personDni: Int): Person? {
-        log.info("looking for $personDni's person in repository...")
-        return personDao.findByDni(personDni)
+        log.info("searching for $personDni's person in repository...")
+        val personFound = personDao.findByDni(personDni) ?: throw NotFoundException("the person with ID $personDni doesn't exist.")
+        log.info("The person ${personFound.name} with ID $personDni has been found in Repository. Person Body: $personFound.")
+        return personFound
     }
 
     override fun deletePersonByDni(dni: Int): Unit {
-        log.info("Deleting person...")
+        log.info("Deleting person with DNI $dni...")
         personDao.deletePersonByDni(dni)
-        log.info("The person has been deleted from the repository.")
+        log.info("The person with DNI $dni has been deleted from the repository.")
     }
 }

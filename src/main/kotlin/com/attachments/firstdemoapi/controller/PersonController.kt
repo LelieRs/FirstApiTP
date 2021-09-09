@@ -22,26 +22,17 @@ class PersonController (@Autowired var personService: PersonService){
 
     @GetMapping("/persons")
     fun findAllPersons(): ResponseEntity <List<Person>>{
-        val personList = personService.findAllPersons()
         return ResponseEntity(personService.findAllPersons(), HttpStatus.OK)
     }
 
     @GetMapping("/persons/{dni}")
     fun findPersonById(@PathVariable dni: Int): ResponseEntity<Person?> {
-        var person: Person? = null
-        var status = HttpStatus.OK
-        try {
-            person = personService.findPersonByDni(dni)
-        }catch(e: NotFoundException) {
-            log.info(e.message)
-            status = HttpStatus.NOT_FOUND
-        }
-        return ResponseEntity(person, status)
+        return ResponseEntity(personService.findPersonByDni(dni), HttpStatus.OK)
     }
 
     @PutMapping("/persons")
     fun updatePerson(@RequestBody person: Person): ResponseEntity<Person> {
-        return ResponseEntity(personService.addPerson(person), HttpStatus.OK)
+        return ResponseEntity(personService.updatePerson(person), HttpStatus.OK)
     }
 
     @DeleteMapping("/persons/{dni}")

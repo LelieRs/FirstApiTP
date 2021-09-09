@@ -21,24 +21,23 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
     }
 
     override fun findAllPersons(): List<Person> {
-        log.info("Searching for all the persons saved in repository...")
+        log.info("Searching for all the persons saved...")
         val result = personRepository.findAllPersons()
         log.info("Persons found.")
         return result
     }
 
     override fun findPersonByDni(dni: Int): Person? {
-        log.info("Searching for ${dni}...")
-        val person =
-            personRepository.findPersonByDni(dni) ?: throw NotFoundException("the person with ID $dni doesn't exist.")
-        log.info("Person found.")
+        log.info("The person with ID ${dni} will be sought.")
+        val person = personRepository.findPersonByDni(dni)
         return person
     }
 
     override fun updatePerson(person: Person): Person {
         log.info("Updating ${person.dni}'s data...")
-        return personRepository.savePerson(person)
+        val personUpdated = personRepository.savePerson(person)
         log.info("The person with ID ${person.dni} has been updated successfully.")
+        return personUpdated
     }
 
     override fun deletePersonByDni(dni: Int): Unit {
