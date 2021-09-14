@@ -1,3 +1,10 @@
 package com.attachments.firstdemoapi.model
 
-data class Book (var isbn: String)
+import javax.persistence.*
+
+@Entity
+@Table(name = "book")
+data class Book (
+    var name: String,
+    @Id
+    var isbn: String)
