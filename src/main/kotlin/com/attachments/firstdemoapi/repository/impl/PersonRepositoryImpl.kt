@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 
 @Repository
-class PersonRepositoryImpl (@Autowired  private var personDaoJpa: PersonDaoJpa): PersonRepository {
+class PersonRepositoryImpl (@Autowired  private val personDaoJpa: PersonDaoJpa): PersonRepository {
 
     private val log = KotlinLogging.logger {}
 
