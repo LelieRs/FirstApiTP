@@ -3,14 +3,12 @@ package com.attachments.firstdemoapi.model
 import javax.persistence.*
 
 @Entity
-@Table (name = "movie")
 data class Movie(
+    val name: String,
+    val director: String,
+    val category: String,
+    val price: Int,
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int,
-    var name: String,
-    var director: String,
-    var category: String,
-    var price: Int
-
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    val id: Int? = null
 )
