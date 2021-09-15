@@ -11,6 +11,6 @@ data class Person(
     val age:Int,
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name="person_id")
-    val moviesList: List<Movie>,
+    val movies: List<Movie>,
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     val book: Book)
