@@ -1,14 +1,18 @@
 package com.attachments.firstdemoapi
 
-import com.attachments.firstdemoapi.controller.PersonController
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.context.annotation.Bean
+import org.springframework.web.client.RestTemplate
 
 @SpringBootApplication
 class FirstdemoapiApplication
 
 fun main(args: Array<String>) {
 	runApplication<FirstdemoapiApplication>(*args)
+}
+
+@Bean
+fun restTemplate(): RestTemplate {
+	return RestTemplate()
 }

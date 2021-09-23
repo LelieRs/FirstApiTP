@@ -1,10 +1,11 @@
 package com.attachments.firstdemoapi.service
 
+import com.attachments.firstdemoapi.controller.dto.PersonInput
 import com.attachments.firstdemoapi.model.Person
 
 interface PersonService {
 
-        fun addPerson(person : Person): Person
+        fun addPerson(personInput: PersonInput): Person
 
         fun findAllPersons(): List<Person>
 
