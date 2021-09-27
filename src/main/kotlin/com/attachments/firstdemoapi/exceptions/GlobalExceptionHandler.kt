@@ -9,7 +9,7 @@ import java.sql.Timestamp
 import javax.servlet.http.HttpServletRequest
 
 @ControllerAdvice
-class PersonExceptionHandler{
+class GlobalExceptionHandler{
 
     @ExceptionHandler(NotFoundException::class)
     fun NotFoundException(ex: NotFoundException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
