@@ -1,11 +1,12 @@
 package com.attachments.firstdemoapi.repository.dao
 
-import com.attachments.firstdemoapi.exceptions.NotFoundException
 import com.attachments.firstdemoapi.model.Person
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
-import org.springframework.web.client.HttpClientErrorException
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
 
 @Repository
 @Component

@@ -1,6 +1,6 @@
 package com.attachments.firstdemoapi.controller
 
-import com.attachments.firstdemoapi.exceptions.NotFoundException
+import com.attachments.firstdemoapi.controller.dto.PersonInput
 import com.attachments.firstdemoapi.model.Person
 import com.attachments.firstdemoapi.service.PersonService
 import mu.KotlinLogging
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping("/firstapi")
+@RequestMapping("/api")
 class PersonController (@Autowired var personService: PersonService){
     private val log = KotlinLogging.logger {}
 
     @PostMapping("/persons")
-    fun generatePerson (@RequestBody person: Person): ResponseEntity<Person> {
-        return ResponseEntity(personService.addPerson(person), HttpStatus.OK)
+    fun generatePerson (@RequestBody personInput: PersonInput): ResponseEntity<Person> {
+        return ResponseEntity(personService.addPerson(personInput), HttpStatus.OK)
     }
 
     @GetMapping("/persons")

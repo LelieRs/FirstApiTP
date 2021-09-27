@@ -1,6 +1,9 @@
 package com.attachments.firstdemoapi.service.impl
 
-import com.attachments.firstdemoapi.exceptions.NotFoundException
+import com.attachments.firstdemoapi.client.BookClient
+import com.attachments.firstdemoapi.client.dto.VolumeInfo
+import com.attachments.firstdemoapi.controller.dto.PersonInput
+import com.attachments.firstdemoapi.model.Book
 import com.attachments.firstdemoapi.model.Person
 import com.attachments.firstdemoapi.repository.PersonRepository
 import com.attachments.firstdemoapi.service.PersonService
@@ -9,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class PersonServiceImpl(@Autowired  private var personRepository: PersonRepository): PersonService {
+class PersonServiceImpl(@Autowired  private var personRepository: PersonRepository, @Autowired  private var bookClient: BookClient): PersonService {
+
 
     private val log = KotlinLogging.logger {}
 
-    override fun addPerson(person: Person): Person {
-        log.info("Creating ${person.name}.")
+    override fun addPerson(personInput: PersonInput): Person {
+        log.info("Creating ${personInput.name}.")
+        val person: Person = createPerson(personInput)
         val personSaved = personRepository.savePerson(person)
         log.info("${person.name} has been created.")
         return personSaved
@@ -43,5 +48,33 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
         log.info("The person with ID ${dni} will be deleted.")
         personRepository.deletePersonByDni(dni)
         log.info("The person with ID ${dni} has been deleted successfully.")
+    }
+
+    private fun createPerson(personInput: PersonInput): Person {
+        val book: Book = createBook(personInput.isbn)
+
+        return Person(
+            personInput.name,
+            personInput.lastName,
+            personInput.dni,
+            personInput.age,
+            personInput.movies,
+            book
+        )
+    }
+
+
+     private fun createBook(isbn: String): Book {
+        val bookResponse = bookClient.getBookResponse(isbn)
+        val volumeInfo: VolumeInfo = bookResponse.items.get(0).volumeInfo
+
+        return Book(
+            isbn,
+            volumeInfo.authors.get(0),
+            volumeInfo.description,
+            volumeInfo.publisher,
+            volumeInfo.publishedDate,
+            volumeInfo.title,
+        )
     }
 }
