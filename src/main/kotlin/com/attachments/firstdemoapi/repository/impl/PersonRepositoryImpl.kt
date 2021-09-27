@@ -6,6 +6,7 @@ import com.attachments.firstdemoapi.repository.PersonRepository
 import com.attachments.firstdemoapi.repository.dao.PersonDaoJpa
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -29,15 +30,19 @@ class PersonRepositoryImpl (@Autowired  private val personDaoJpa: PersonDaoJpa):
 
     override fun findPersonByDni(personDni: Int): Person {
         log.info("searching for $personDni's person in repository...")
-        val personFound = personDaoJpa.findByIdOrNull(personDni) ?:
-        throw NotFoundException("the person with ID $personDni doesn't exist.")
+        val personFound = personDaoJpa.findByIdOrNull(personDni)
+            ?: throw NotFoundException("the person with ID $personDni doesn't exist.")
         log.info("The person with ID $personDni has been found in Repository. Person Body: $personFound.")
         return personFound
     }
 
     override fun deletePersonByDni(dni: Int): Unit {
         log.info("Deleting person with DNI $dni...")
-        personDaoJpa.deleteById(dni)
+        try {
+            personDaoJpa.deleteById(dni)
+        } catch (ex: EmptyResultDataAccessException) {
+            throw NotFoundException("the person with ID $dni cannot be erased because it doesn't exist.")
+        }
         log.info("The person with DNI $dni has been deleted from the repository.")
     }
 }
