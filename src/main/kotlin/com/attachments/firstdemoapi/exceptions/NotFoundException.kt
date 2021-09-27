@@ -5,4 +5,4 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import java.lang.Exception
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-class NotFoundException(message: String?): Exception(message)
+class NotFoundException(override val message: String = ""): RuntimeException(message)
