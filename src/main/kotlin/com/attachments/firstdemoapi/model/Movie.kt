@@ -1,4 +1,14 @@
 package com.attachments.firstdemoapi.model
 
+import javax.persistence.*
 
-class Movie (var name: String, var director: String, var category: String, var price: Int)
+@Entity
+data class Movie(
+    val name: String,
+    val director: String,
+    val category: String,
+    val price: Int,
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    val id: Int? = null
+)

@@ -1,3 +1,8 @@
 package com.attachments.firstdemoapi.model
 
-data class Book (var isbn: String)
+import javax.persistence.*
+
+@Entity
+data class Book (
+    @Id
+    val isbn: String)

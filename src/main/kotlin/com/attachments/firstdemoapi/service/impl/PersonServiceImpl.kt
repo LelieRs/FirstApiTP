@@ -29,8 +29,7 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
 
     override fun findPersonByDni(dni: Int): Person? {
         log.info("The person with ID ${dni} will be sought.")
-        val person = personRepository.findPersonByDni(dni)
-        return person
+        return personRepository.findPersonByDni(dni)
     }
 
     override fun updatePerson(person: Person): Person {

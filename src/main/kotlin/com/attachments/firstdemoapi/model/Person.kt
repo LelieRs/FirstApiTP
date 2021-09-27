@@ -1,4 +1,16 @@
 package com.attachments.firstdemoapi.model
 
-data class Person (var name:String, var lastName:String, val dni:Int, var age:Int, var moviesList: List<Movie>, var book: Book)
+import javax.persistence.*
 
+@Entity
+data class Person(
+    val name:String,
+    val lastName:String,
+    @Id
+    val dni:Int,
+    val age:Int,
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name="person_id")
+    val movies: List<Movie>,
+    @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
+    val book: Book)
