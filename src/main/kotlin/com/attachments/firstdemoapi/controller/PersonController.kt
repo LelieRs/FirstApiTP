@@ -22,10 +22,17 @@ class PersonController (@Autowired var personService: PersonService){
         return ResponseEntity(personService.addPerson(personInput), HttpStatus.OK)
     }
 
-    /*@GetMapping("/persons")
-    fun findAllPersons(): ResponseEntity <List<Person>>{
-        return ResponseEntity(personService.findAllPersons(), HttpStatus.OK)
-    }*/
+    @GetMapping("/persons")
+    fun findPersonsByParameters(@RequestParam(required = false) ageFrom: Int?, @RequestParam(required = false) ageTo: Int?): ResponseEntity<List<Person>>{
+        val people: List<Person> = when{
+
+            ageFrom != null && ageTo != null -> personService.findPersonsByAgeBetween(ageFrom, ageTo)
+            ageFrom != null && ageTo == null -> personService.findPersonsByAge(ageFrom)
+            ageFrom == null && ageTo == null -> personService.findAllPersons()
+            else -> throw BadRequestException("Bad Request Exception")
+        }
+        return ResponseEntity(people, HttpStatus.OK)
+    }
 
     @GetMapping("/persons/{dni}")
     fun findPersonById(@PathVariable dni: Int): ResponseEntity<Person?> {
@@ -41,19 +48,6 @@ class PersonController (@Autowired var personService: PersonService){
     fun deletePersonByDni(@PathVariable dni: Int): ResponseEntity<Unit>{
         return ResponseEntity(personService.deletePersonByDni(dni), HttpStatus.OK)
     }
-
-    @GetMapping("/persons")
-    fun findPersonsByParameters(@RequestParam(required = false) ageFrom: Int?, @RequestParam(required = false) ageTo: Int?): ResponseEntity<List<Person>>{
-        val people: List<Person> = when{
-
-            ageFrom != null && ageTo != null -> personService.findPersonsByAgeBetween(ageFrom, ageTo)
-            ageFrom != null && ageTo == null -> personService.findPersonsByAge(ageFrom)
-            ageFrom == null && ageTo == null -> personService.findAllPersons()
-            else -> throw BadRequestException("Bad Request Exception")
-        }
-        return ResponseEntity(people, HttpStatus.OK)
-    }
-
 }
 
 
