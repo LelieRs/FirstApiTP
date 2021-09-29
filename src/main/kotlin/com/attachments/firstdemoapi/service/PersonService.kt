@@ -14,4 +14,9 @@ interface PersonService {
         fun updatePerson(person: Person): Person
 
         fun deletePersonByDni(dni: Int): Unit
+
+        fun findPersonsByAge(age: Int):List<Person>
+
+        fun findPersonsByAgeBetween(ageFrom: Int, ageTo: Int):List<Person>
+
 }
