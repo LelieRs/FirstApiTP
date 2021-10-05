@@ -16,5 +16,13 @@ class GlobalExceptionHandler{
         return ResponseEntity(ErrorResponse(Timestamp(System.currentTimeMillis()), HttpStatus.NOT_FOUND, ex.message, request.requestURI), HttpStatus.NOT_FOUND)
     }
 
+    @ExceptionHandler(BadRequestException::class)
+    fun BadRequestException(ex: BadRequestException, request: HttpServletRequest): ResponseEntity<ErrorResponse>{
+        return ResponseEntity(ErrorResponse(Timestamp(System.currentTimeMillis()), HttpStatus.BAD_REQUEST, ex.message, request.requestURI), HttpStatus.BAD_REQUEST)
+    }
 
+    @ExceptionHandler(NoContentException::class)
+    fun NoContentException(ex: NoContentException, request: HttpServletRequest): ResponseEntity<ErrorResponse>{
+        return ResponseEntity(ErrorResponse(Timestamp(System.currentTimeMillis()), HttpStatus.NO_CONTENT, ex.message, request.requestURI), HttpStatus.NO_CONTENT)
+    }
 }

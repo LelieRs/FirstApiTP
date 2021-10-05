@@ -50,6 +50,28 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
         log.info("The person with ID ${dni} has been deleted successfully.")
     }
 
+
+    override fun findPersonsByAge(age: Int): List<Person> {
+        log.info("looking for people with $age years old...")
+        val peopleFound = personRepository.findPersonsByAge(age)
+        log.info("People with the age of $age have been found. People Bodies: $peopleFound.")
+        return peopleFound
+    }
+
+    override fun findPersonsByAgeBetween(ageFrom: Int, ageTo: Int): List<Person> {
+        log.info("looking for people between $ageFrom and $ageTo years old...")
+        val peopleFound = personRepository.findPersonsByAgeBetween(ageFrom, ageTo)
+        log.info("People with the age between $ageFrom and $ageTo years old have been found. People Bodies: $peopleFound.")
+        return peopleFound
+    }
+
+    override fun findPersonsByNameStartingWith(nameStartedWith: String): List<Person> {
+        log.info("looking for people with the initials $nameStartedWith...")
+        val peopleFound = personRepository.findPersonsByNameStartingWith(nameStartedWith)
+        log.info("People with their name started with $nameStartedWith have been found. People Bodies: $peopleFound.")
+        return peopleFound
+    }
+
     private fun createPerson(personInput: PersonInput): Person {
         val book: Book = createBook(personInput.isbn)
 

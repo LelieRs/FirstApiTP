@@ -1,5 +1,6 @@
 package com.attachments.firstdemoapi.repository.impl
 
+import com.attachments.firstdemoapi.exceptions.NoContentException
 import com.attachments.firstdemoapi.exceptions.NotFoundException
 import com.attachments.firstdemoapi.model.Person
 import com.attachments.firstdemoapi.repository.PersonRepository
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
-import java.util.*
 
 @Repository
 class PersonRepositoryImpl (@Autowired  private val personDaoJpa: PersonDaoJpa): PersonRepository {
@@ -45,4 +45,39 @@ class PersonRepositoryImpl (@Autowired  private val personDaoJpa: PersonDaoJpa):
         }
         log.info("The person with DNI $dni has been deleted from the repository.")
     }
+
+    override fun findPersonsByAge(age: Int): List<Person> {
+        log.info("Searching for persons with the age of $age...")
+        val personList = personDaoJpa.findPeopleByAge(age)
+
+        if (personList.isNotEmpty()){
+           return personList
+        } else {
+           throw NoContentException("There are not people with the age $age registered in system.")
+        }
+    }
+
+    override fun findPersonsByAgeBetween(ageFrom: Int, ageTo: Int): List<Person> {
+        log.info("Searching for persons with the age informed...")
+        val personList = personDaoJpa.findPersonsByAgeBetween(ageFrom, ageTo)
+
+        if (personList.isNotEmpty()){
+            return personList
+        } else {
+            throw NotFoundException("There are no people registered with the age within the indicated parameters in system.")
+        }
+    }
+
+    override fun findPersonsByNameStartingWith(nameStartedWith: String): List<Person> {
+        log.info("Searching for persons with name started with $nameStartedWith...")
+        val personsFound = personDaoJpa.findPersonsByNameStartingWith(nameStartedWith)
+
+        if (personsFound.isNotEmpty()){
+            return personsFound
+        }else {
+            throw NoContentException("There are no people registered in system with name started in $nameStartedWith.")
+        }
+    }
+
+
 }
