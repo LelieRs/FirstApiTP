@@ -1,5 +1,6 @@
 package com.attachments.firstdemoapi.repository.impl
 
+import com.attachments.firstdemoapi.exceptions.NoContentException
 import com.attachments.firstdemoapi.exceptions.NotFoundException
 import com.attachments.firstdemoapi.model.Person
 import com.attachments.firstdemoapi.repository.PersonRepository
@@ -52,7 +53,7 @@ class PersonRepositoryImpl (@Autowired  private val personDaoJpa: PersonDaoJpa):
         if (personList.isNotEmpty()){
            return personList
         } else {
-           throw NotFoundException("There are not people with the age $age registered in system.")
+           throw NoContentException("There are not people with the age $age registered in system.")
         }
     }
 
@@ -66,4 +67,17 @@ class PersonRepositoryImpl (@Autowired  private val personDaoJpa: PersonDaoJpa):
             throw NotFoundException("There are no people registered with the age within the indicated parameters in system.")
         }
     }
+
+    override fun findPersonsByNameStartingWith(nameStartedWith: String): List<Person> {
+        log.info("Searching for persons with name started with $nameStartedWith...")
+        val personsFound = personDaoJpa.findPersonsByNameStartingWith(nameStartedWith)
+
+        if (personsFound.isNotEmpty()){
+            return personsFound
+        }else {
+            throw NoContentException("There are no people registered in system with name started in $nameStartedWith.")
+        }
+    }
+
+
 }

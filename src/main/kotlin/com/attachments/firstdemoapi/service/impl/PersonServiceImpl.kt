@@ -65,6 +65,13 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
         return peopleFound
     }
 
+    override fun findPersonsByNameStartingWith(nameStartedWith: String): List<Person> {
+        log.info("looking for people with the initials $nameStartedWith...")
+        val peopleFound = personRepository.findPersonsByNameStartingWith(nameStartedWith)
+        log.info("People with their name started with $nameStartedWith have been found. People Bodies: $peopleFound.")
+        return peopleFound
+    }
+
     private fun createPerson(personInput: PersonInput): Person {
         val book: Book = createBook(personInput.isbn)
 
