@@ -5,6 +5,7 @@ import com.attachments.firstdemoapi.client.dto.VolumeInfo
 import com.attachments.firstdemoapi.controller.dto.PersonInput
 import com.attachments.firstdemoapi.model.Book
 import com.attachments.firstdemoapi.model.Person
+import com.attachments.firstdemoapi.model.personStrategy.Doctor
 import com.attachments.firstdemoapi.repository.PersonRepository
 import com.attachments.firstdemoapi.service.PersonService
 import mu.KotlinLogging
@@ -19,7 +20,7 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
 
     override fun addPerson(personInput: PersonInput): Person {
         log.info("Creating ${personInput.name}.")
-        val person: Person = createPerson(personInput)
+        val person: Person = createDoctor(personInput)
         val personSaved = personRepository.savePerson(person)
         log.info("${person.name} has been created.")
         return personSaved
@@ -72,16 +73,17 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
         return peopleFound
     }
 
-    private fun createPerson(personInput: PersonInput): Person {
+    private fun createDoctor(personInput: PersonInput): Person {
         val book: Book = createBook(personInput.isbn)
 
-        return Person(
+        return Doctor(
             personInput.name,
             personInput.lastName,
             personInput.dni,
             personInput.age,
             personInput.movies,
-            book
+            book,
+            0
         )
     }
 

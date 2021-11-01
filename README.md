@@ -5,7 +5,7 @@
 Nos brinda información con respecto a las personas almacenadas en la base de datos (h2); a su vez, consume otro microservicio
 para obtener el cuerpo del libro a través del isbn.
 
-No es necesario estar conectado a alguna VPN y/o base de datos para levantar el programa, pero es nesesario utilizar el postman
+No es necesario estar conectado a alguna VPN y/o base de datos para levantar el programa, pero es nesesario utilizar Postman, Curl, Swagger, etc.
 para realizar las pegadas a los endpoints.
 
 
