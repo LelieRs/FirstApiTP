@@ -6,7 +6,7 @@ import com.attachments.firstdemoapi.model.personStrategy.PoliceOfficer
 
 class JobsTypeStrategy {
 
-    val strategies = mapOf(
+    var strategies = mapOf(
         ProfessionTypeEnum.DOCTOR to Doctor(),
         ProfessionTypeEnum.ENGINEER to Engineer(),
         ProfessionTypeEnum.POLICE_OFFICER to PoliceOfficer()

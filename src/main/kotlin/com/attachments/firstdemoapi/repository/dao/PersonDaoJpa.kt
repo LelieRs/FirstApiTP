@@ -1,5 +1,6 @@
 package com.attachments.firstdemoapi.repository.dao
 
+import com.attachments.firstdemoapi.model.JobsTypeStrategy
 import com.attachments.firstdemoapi.model.Person
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

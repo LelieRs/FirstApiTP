@@ -4,10 +4,7 @@ import com.attachments.firstdemoapi.client.BookClient
 import com.attachments.firstdemoapi.client.dto.VolumeInfo
 import com.attachments.firstdemoapi.controller.dto.PersonInput
 import com.attachments.firstdemoapi.exceptions.NotFoundException
-import com.attachments.firstdemoapi.model.Book
-import com.attachments.firstdemoapi.model.JobsTypeStrategy
-import com.attachments.firstdemoapi.model.Person
-import com.attachments.firstdemoapi.model.ProfessionTypeEnum
+import com.attachments.firstdemoapi.model.*
 import com.attachments.firstdemoapi.model.personStrategy.Doctor
 import com.attachments.firstdemoapi.repository.PersonRepository
 import com.attachments.firstdemoapi.service.PersonService
@@ -109,8 +106,8 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
     override fun work(dni:Int){
         log.info("making the person with DNI ${dni} make some money...")
         val person = personRepository.findPersonByDni(dni)
-        val strategy = JobsTypeStrategy().strategies[person.professionType]
-        strategy!!.work(person)
+        val strategy = getStrategy(person)
+        strategy.work(person)
         updatePerson(person)
         log.info("the person with DNI ${dni} have now ${person.money} dollars.")
     }
@@ -121,6 +118,15 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
         person.professionType = newProfession
         updatePerson(person)
         log.info("the person with DNI ${dni} is now a ${person.professionType}.")
+    }
+
+    private fun getStrategy(person: Person): JobsType{
+        val actualJob = JobsTypeStrategy().strategies[person.professionType]
+        if (actualJob != null){
+            return actualJob
+        }else{
+            throw NotFoundException("the given profession type ${person.professionType} doesn't exist.")
+        }
     }
 
 }
