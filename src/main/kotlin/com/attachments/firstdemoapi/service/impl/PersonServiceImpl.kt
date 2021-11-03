@@ -3,13 +3,17 @@ package com.attachments.firstdemoapi.service.impl
 import com.attachments.firstdemoapi.client.BookClient
 import com.attachments.firstdemoapi.client.dto.VolumeInfo
 import com.attachments.firstdemoapi.controller.dto.PersonInput
+import com.attachments.firstdemoapi.exceptions.NotFoundException
 import com.attachments.firstdemoapi.model.Book
+import com.attachments.firstdemoapi.model.JobsTypeStrategy
 import com.attachments.firstdemoapi.model.Person
+import com.attachments.firstdemoapi.model.ProfessionTypeEnum
 import com.attachments.firstdemoapi.model.personStrategy.Doctor
 import com.attachments.firstdemoapi.repository.PersonRepository
 import com.attachments.firstdemoapi.service.PersonService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,7 +24,7 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
 
     override fun addPerson(personInput: PersonInput): Person {
         log.info("Creating ${personInput.name}.")
-        val person: Person = createDoctor(personInput)
+        val person: Person = createPerson(personInput)
         val personSaved = personRepository.savePerson(person)
         log.info("${person.name} has been created.")
         return personSaved
@@ -33,7 +37,7 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
         return result
     }
 
-    override fun findPersonByDni(dni: Int): Person? {
+    override fun findPersonByDni(dni: Int): Person {
         log.info("The person with ID ${dni} will be sought.")
         return personRepository.findPersonByDni(dni)
     }
@@ -73,20 +77,20 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
         return peopleFound
     }
 
-    private fun createDoctor(personInput: PersonInput): Person {
+    private fun createPerson(personInput: PersonInput): Person {
         val book: Book = createBook(personInput.isbn)
 
-        return Doctor(
+        return Person(
             personInput.name,
             personInput.lastName,
             personInput.dni,
             personInput.age,
             personInput.movies,
             book,
-            0
+            personInput.professionType,
+            personInput.money
         )
     }
-
 
      private fun createBook(isbn: String): Book {
         val bookResponse = bookClient.getBookResponse(isbn)
@@ -101,4 +105,22 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
             volumeInfo.title,
         )
     }
+
+    override fun work(dni:Int){
+        log.info("making the person with DNI ${dni} make some money...")
+        val person = personRepository.findPersonByDni(dni)
+        val strategy = JobsTypeStrategy().strategies[person.professionType]
+        strategy!!.work(person)
+        updatePerson(person)
+        log.info("the person with DNI ${dni} have now ${person.money} dollars.")
+    }
+
+    override fun switchProfession(dni:Int, newProfession: ProfessionTypeEnum) {
+        log.info("the person with DNI ${dni} is going to change of carreer.")
+        val person = personRepository.findPersonByDni(dni)
+        person.professionType = newProfession
+        updatePerson(person)
+        log.info("the person with DNI ${dni} is now a ${person.professionType}.")
+    }
+
 }

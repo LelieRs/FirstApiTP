@@ -2,17 +2,16 @@ package com.attachments.firstdemoapi.model.personStrategy
 
 import com.attachments.firstdemoapi.model.JobsType
 import com.attachments.firstdemoapi.model.Person
-import javax.persistence.Entity
+import com.attachments.firstdemoapi.model.ProfessionTypeEnum
 
-@Entity
-class Engineer : JobsType() {
+class Engineer : JobsType {
 
-    override fun work(): Person {
-
+    override fun work(person: Person) {
+        person.money += 1500
     }
 
-    override fun switchProfession(): Person {
-
+    override fun switchProfession(person: Person, newProfession: ProfessionTypeEnum) {
+        person.professionType = newProfession
     }
 
 

@@ -11,18 +11,9 @@ class JobsTypeStrategy {
         ProfessionTypeEnum.ENGINEER to Engineer(),
         ProfessionTypeEnum.POLICE_OFFICER to PoliceOfficer()
     )
-
-    fun work(profession: ProfessionTypeEnum): Person{
-        return strategies[profession]!!.work()
-    }
-
-   /* fun switchProfession(newProfession: ProfessionTypeEnum): Person{
-        return strategies[newProfession]!!.switchProfession()
-    }*/
 }
 
-abstract class JobsType {
-
-    abstract fun switchProfession(): Person
-    abstract fun work(): Person
+interface JobsType {
+    fun work(person: Person)
+    fun switchProfession(person: Person, newProfession: ProfessionTypeEnum)
 }

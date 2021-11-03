@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.batch.JobExecutionEvent
 
 internal class PoliceOfficerTest {
 
-    @Test
+  /*  @Test
     fun work() {
         val randomBook = Book("9781501182099", "Scary Movie", "whoever", "whoeverBis","05/18/1900", "comedy")
         val policeOfficer1 = PoliceOfficer("Terry", "Jeffords", 47864279, 42, listOf(), randomBook, 300) //asignar 300 de dinero inicial
@@ -26,5 +26,5 @@ internal class PoliceOfficerTest {
         val engineer = policeOfficer3.work()
 
         assertEquals(2300, engineer.money)
-    }
+    } */
 }

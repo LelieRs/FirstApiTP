@@ -3,6 +3,7 @@ package com.attachments.firstdemoapi.controller
 import com.attachments.firstdemoapi.controller.dto.PersonInput
 import com.attachments.firstdemoapi.exceptions.BadRequestException
 import com.attachments.firstdemoapi.model.Person
+import com.attachments.firstdemoapi.model.ProfessionTypeEnum
 import com.attachments.firstdemoapi.service.PersonService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
@@ -69,6 +70,19 @@ class PersonController (@Autowired var personService: PersonService){
     fun deletePersonByDni(@PathVariable dni: Int): ResponseEntity<Unit>{
         return ResponseEntity(personService.deletePersonByDni(dni), HttpStatus.OK)
     }
+
+    @PostMapping("persons/{dni}/work") //borrar work
+    fun work (@PathVariable dni: Int): ResponseEntity<Unit> {
+        return ResponseEntity(personService.work(dni), HttpStatus.OK)
+    }
+
+    @PostMapping("persons/{dni}/{newProfession}")
+    fun switchProfession (@PathVariable dni: Int, @PathVariable newProfession: ProfessionTypeEnum): ResponseEntity<Unit> {
+        return ResponseEntity(personService.switchProfession(dni, newProfession), HttpStatus.OK)
+    }
+
+
+
 }
 
 

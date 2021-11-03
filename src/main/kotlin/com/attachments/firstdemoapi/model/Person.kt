@@ -14,8 +14,8 @@ data class Person (
     val movies: List<Movie>,
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     val book: Book,
-    val ProfessionType: ProfessionTypeEnum,
-    val money: Long)
+    var professionType: ProfessionTypeEnum,
+    var money: Long)
 
 
 enum class ProfessionTypeEnum{ DOCTOR, ENGINEER, POLICE_OFFICER}

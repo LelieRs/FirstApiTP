@@ -10,7 +10,7 @@ interface PersonRepository {
 
     fun findAllPersons(): List<Person>
 
-    fun findPersonByDni(personDni: Int): Person?
+    fun findPersonByDni(personDni: Int): Person
 
     fun deletePersonByDni(dni: Int): Unit
 

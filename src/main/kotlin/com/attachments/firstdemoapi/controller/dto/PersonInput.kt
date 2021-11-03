@@ -1,6 +1,7 @@
 package com.attachments.firstdemoapi.controller.dto
 
 import com.attachments.firstdemoapi.model.Movie
+import com.attachments.firstdemoapi.model.ProfessionTypeEnum
 
 data class PersonInput (
     val name: String,
@@ -8,5 +9,6 @@ data class PersonInput (
     val dni: Int,
     val age: Int,
     val movies: List<Movie>,
-    val isbn: String
-        )
+    val isbn: String,
+    var professionType: ProfessionTypeEnum,
+    var money: Long)
