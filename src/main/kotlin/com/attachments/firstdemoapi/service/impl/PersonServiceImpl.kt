@@ -5,12 +5,11 @@ import com.attachments.firstdemoapi.client.dto.VolumeInfo
 import com.attachments.firstdemoapi.controller.dto.PersonInput
 import com.attachments.firstdemoapi.exceptions.NotFoundException
 import com.attachments.firstdemoapi.model.*
-import com.attachments.firstdemoapi.model.personStrategy.Doctor
+import com.attachments.firstdemoapi.model.personStrategy.ModelMapper
 import com.attachments.firstdemoapi.repository.PersonRepository
 import com.attachments.firstdemoapi.service.PersonService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -21,7 +20,8 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
 
     override fun addPerson(personInput: PersonInput): Person {
         log.info("Creating ${personInput.name}.")
-        val person: Person = createPerson(personInput)
+        val person: Person = ModelMapper.entityFromInput(personInput)
+        person.book = createBook(personInput.isbn)
         val personSaved = personRepository.savePerson(person)
         log.info("${person.name} has been created.")
         return personSaved
@@ -73,8 +73,8 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
         log.info("People with their name started with $nameStartedWith have been found. People Bodies: $peopleFound.")
         return peopleFound
     }
-
-    private fun createPerson(personInput: PersonInput): Person {
+/*
+    public fun createPerson(personInput: PersonInput): Person {
         val book: Book = createBook(personInput.isbn)
 
         return Person(
@@ -88,8 +88,8 @@ class PersonServiceImpl(@Autowired  private var personRepository: PersonReposito
             personInput.money
         )
     }
-
-     private fun createBook(isbn: String): Book {
+*/
+    fun createBook(isbn: String): Book {
         val bookResponse = bookClient.getBookResponse(isbn)
         val volumeInfo: VolumeInfo = bookResponse.items.get(0).volumeInfo
 

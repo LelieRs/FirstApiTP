@@ -1,13 +1,18 @@
 package com.attachments.firstdemoapi.model.personStrategy
 
+import com.attachments.firstdemoapi.controller.dto.MovieInput
 import com.attachments.firstdemoapi.controller.dto.PersonInput
 import com.attachments.firstdemoapi.model.ProfessionTypeEnum
 import com.attachments.firstdemoapi.service.PersonService
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
 
-internal class DoctorTest (@Autowired private val personService: PersonService){
+@Tag("Integration")
+@SpringBootTest
+class DoctorTest (@Autowired private val personService: PersonService){
 
     /*  @Test
       fun work() {
@@ -23,7 +28,15 @@ internal class DoctorTest (@Autowired private val personService: PersonService){
     @Test //test Corregido
     fun switchProfession() {
 
-        var person = PersonInput("Ross", "Geller", 47864279, 35, listOf(), "9781501182099", ProfessionTypeEnum.DOCTOR,0)
+        var movieInput = MovieInput("Holocausto Canibal",
+            "Pepito Pérez",
+            "Chuito",
+            6367)
+
+        var movieInputList = mutableListOf<MovieInput>(movieInput)
+
+        var person = PersonInput("Ross", "Geller", 47864279, 35, ProfessionTypeEnum.DOCTOR, 0, "9781501182099", movieInputList)
+
         personService.addPerson(person)
         personService.work(47864279)
         personService.switchProfession(47864279, ProfessionTypeEnum.ENGINEER)
