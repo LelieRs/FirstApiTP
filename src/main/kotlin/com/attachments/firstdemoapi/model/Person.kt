@@ -9,11 +9,12 @@ data class Person (
     @Id
     val dni: Int,
     val age: Int,
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JoinColumn(name="person_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "person_id")
     val movies: List<Movie>,
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     val book: Book,
+    @Enumerated(EnumType.STRING)
     var professionType: ProfessionTypeEnum,
     var money: Long)
 
